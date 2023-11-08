@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.caixamercado.HelloController">
+   <children>
+      <ListView fx:id="list" layoutX="300.0" layoutY="16.0" prefHeight="329.0" prefWidth="453.0" />
+      <VBox layoutX="42.0" layoutY="502.0" prefHeight="103.0" prefWidth="180.0">
+         <children>
+            <Label text="F5 NOVA VENDA" />
+            <Label text="F11 EXCLUIR VENDA" />
+            <Label text="F4 QUANTIDADE" />
+            <Label prefHeight="16.0" prefWidth="125.0" text="F10 FINALIZAR" />
+         </children>
+      </VBox>
+      <VBox layoutX="48.0" layoutY="14.0" prefHeight="96.0" prefWidth="188.0">
+         <children>
+            <TextField fx:id="cod_barras" text="CÓDIGO DE BARRAS" />
+            <TextArea prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </VBox>
+      <VBox layoutX="48.0" layoutY="135.0" prefHeight="96.0" prefWidth="188.0">
+         <children>
+            <TextField fx:id="valor_unit" promptText="valor_unit" text="VALOR UNITÁRIO" />
+            <TextArea prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </VBox>
+      <VBox layoutX="48.0" layoutY="249.0" prefHeight="96.0" prefWidth="188.0">
+         <children>
+            <TextField fx:id="total_item" promptText="total_item" text="TOTAL DO ITEM" />
+            <TextArea prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </VBox>
+      <VBox layoutX="300.0" layoutY="400.0" prefHeight="96.0" prefWidth="453.0">
+         <children>
+            <TextField fx:id="subtotal" text="SUBTOTAL" />
+            <TextArea prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </VBox>
+      <VBox layoutX="300.0" layoutY="505.0" prefHeight="96.0" prefWidth="242.0">
+         <children>
+            <TextField fx:id="total_recebi" text="TOTAL RECEBIDO" />
+            <TextArea prefHeight="72.0" prefWidth="216.0" />
+         </children>
+      </VBox>
+      <VBox layoutX="544.0" layoutY="505.0" prefHeight="96.0" prefWidth="209.0">
+         <children>
+            <TextField fx:id="troco" text="TROCO" />
+            <TextArea prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </VBox>
+   </children>
+</Pane>
