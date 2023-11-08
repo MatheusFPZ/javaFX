@@ -2,8 +2,11 @@ package com.example.caixamercado;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,40 +14,62 @@ import java.util.ResourceBundle;
 public class HelloController implements Initializable {
 
     @FXML
-    private TextField cod_barras;
+    private TextField cod_barras_text;
+
+    @FXML
+    private VBox funcoes;
+
+    @FXML
+    private Label lbl_subtotal;
+
+    @FXML
+    private Label lbl_troco;
+
+    @FXML
+    private Label lbl_valor_total_item;
+
+    @FXML
+    private Label lbl_valor_total_rece;
+
+    @FXML
+    private Label lbl_valor_unit;
 
     @FXML
     private ListView<?> list;
 
     @FXML
-    private TextField subtotal;
+    private Pane panel_cod_barras;
 
     @FXML
-    private TextField total_item;
+    private Pane panel_subtotal;
 
     @FXML
-    private TextField total_recebi;
+    private Pane panel_total_item;
 
     @FXML
-    private TextField troco;
+    private Pane panel_total_recebido;
 
     @FXML
-    private TextField valor_unit;
+    private Pane panel_troco;
+
+    @FXML
+    private Pane panel_valor_unit;
+
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cod_barras.setStyle("-fx-control-inner-background:  grey;");
-        subtotal.setStyle("-fx-control-inner-background:  grey;");
-        total_item.setStyle("-fx-control-inner-background:  grey;");
-        total_recebi.setStyle("-fx-control-inner-background:  grey;");
-        troco.setStyle("-fx-control-inner-background:  grey;");
-        valor_unit.setStyle("-fx-control-inner-background:  grey;");
-        cod_barras.setEditable(false);
-        subtotal.setEditable(false);
-        total_item.setEditable(false);
-        total_recebi.setEditable(false);
-        troco.setEditable(false);
-        valor_unit.setEditable(false);
+        panel_cod_barras.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
+        panel_subtotal.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
+        panel_total_item.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
+        panel_total_recebido.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
+        panel_troco.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
+        panel_valor_unit.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
+
+        funcoes.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
+        cod_barras_text.setStyle("-fx-background-color: white;");
+
     }
+
 }
