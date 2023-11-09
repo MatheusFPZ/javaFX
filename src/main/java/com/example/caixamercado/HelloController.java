@@ -113,8 +113,17 @@ public class HelloController implements Initializable {
                     ", Nome: " + produtoEncontrado.getDescricao() +
                     ", Preço: " + produtoEncontrado.getValor_unitario());
         }
-        public void preencherTabela () {
+        public void  preencherTabela() {
+            ProdutoModel produtoEncontrado2 = produtosDAO.BuscarProduto(idProdutoParaBuscar);
 
+            if(produtoEncontrado2!=null){
+                table.getItems().clear();
+
+                table.getItems().add(produtoEncontrado2);
+                //table_codigo.setCellValueFactory(cellData -> cellData.getValue().codigoProperty());
+                table_descricao.setCellValueFactory(cellData -> cellData.getValue().descricaoProperty());
+                //table_valor_unit.setCellValueFactory(cellData -> cellData.getValue().valor_unitarioProperty());
+            }
         }
 
     }
