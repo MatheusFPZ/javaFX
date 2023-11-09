@@ -161,13 +161,13 @@
             </Pane>
          </children>
       </VBox>
-      <TableView layoutX="685.0" layoutY="55.0" prefHeight="358.0" prefWidth="630.0">
+      <TableView fx:id="table" layoutX="685.0" layoutY="55.0" prefHeight="358.0" prefWidth="630.0">
         <columns>
           <TableColumn fx:id="table_n_item" prefWidth="109.0" text="N Item" />
-            <TableColumn editable="false" minWidth="0.0" prefWidth="89.0" text="Código " />
-            <TableColumn prefWidth="235.0" text="Descrição" />
+            <TableColumn fx:id="table_codigo" editable="false" minWidth="0.0" prefWidth="89.0" text="Código " />
+            <TableColumn fx:id="table_descricao" prefWidth="235.0" text="Descrição" />
             <TableColumn prefWidth="67.0" text="Qtd" />
-            <TableColumn prefWidth="79.0" text="Vlr. Unit." />
+            <TableColumn fx:id="table_valor_unit" prefWidth="79.0" text="Vlr. Unit." />
             <TableColumn prefWidth="50.0" text="Total" />
         </columns>
       </TableView>

@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import produtos.ProdutosDAO;
 
 import java.io.IOException;
 
@@ -19,11 +18,12 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        ProdutosDAO produtosDAO = new ProdutosDAO();
+
 
         // Chamar a função para buscar todos os produtos
 //produtosDAO.buscarTodosProdutos();
-        produtosDAO.BuscarProduto(2);
+        //produtosDAO.BuscarProduto(2);
+        //produtosDAO.RemoverProduto(1);
         launch();
     }
 }

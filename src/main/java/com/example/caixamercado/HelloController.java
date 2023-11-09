@@ -3,14 +3,15 @@ package com.example.caixamercado;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import produtos.ProdutoModel;
+import produtos.ProdutosDAO;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -73,7 +74,17 @@ public class HelloController implements Initializable {
     @FXML
     private ImageView img_view;
 
+    @FXML
+    private TableView<ProdutoModel> table;
 
+    @FXML
+    private TableColumn<ProdutoModel, Integer> table_codigo;
+
+    @FXML
+    private TableColumn<ProdutoModel, String> table_descricao;
+
+    @FXML
+    private TableColumn<ProdutoModel, Double> table_valor_unit;
 
 
     @Override
@@ -92,7 +103,19 @@ public class HelloController implements Initializable {
         Image image = new Image("file:/home/linux/Downloads/3549578.jpg");
         img_view.setImage(image);
 
+        //ACOES BANCO DADOS
+        ProdutosDAO produtosDAO = new ProdutosDAO();
+        int idProdutoParaBuscar = 2;
+        ProdutoModel produtoEncontrado = produtosDAO.BuscarProduto(idProdutoParaBuscar);
+        if (produtoEncontrado != null) {
+
+            System.out.println("ID: " + produtoEncontrado.getCodigo() +
+                    ", Nome: " + produtoEncontrado.getDescricao() +
+                    ", Preço: " + produtoEncontrado.getValor_unitario());
+        }
+        public void preencherTabela () {
+
+        }
 
     }
-
 }

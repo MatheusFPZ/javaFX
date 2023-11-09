@@ -42,7 +42,8 @@ public class ProdutosDAO {
         }
     }
 
-    public void BuscarProduto(int idProduto){
+
+    public ProdutoModel BuscarProduto(int idProduto){
         Connection conexao = database.conectar();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -59,8 +60,8 @@ public class ProdutosDAO {
                 if(resultSet.next()){
                     String descricao = resultSet.getString("descricao");
                     double valor_unitario = resultSet.getDouble("valor_unitario");
-
-                    System.out.println("codigo:"+idProduto+",descricao: "+ descricao+", valor: "+ valor_unitario);
+                    return new ProdutoModel(idProduto, descricao, valor_unitario);
+                    //System.out.println("codigo:"+idProduto+",descricao: "+ descricao+", valor: "+ valor_unitario);
                 }else {
                     System.out.println("nao encontrado");
                 }
@@ -74,10 +75,36 @@ public class ProdutosDAO {
         } else {
             System.out.println("Falha na conexão com o banco de dados.");
         }
+        return null;
     }
 
 
     public void RemoverProduto(int idProduto){
+
+        Connection conexao = database.conectar();
+        PreparedStatement preparedStatement = null;
+
+
+
+        if(conexao!=null){
+            try {
+                String sql = "DELETE FROM produtos WHERE codigo =?";
+                preparedStatement= conexao.prepareStatement(sql);
+
+                preparedStatement.setInt(1, idProduto);
+                int linhasAfetadas = preparedStatement.executeUpdate();
+
+                if(linhasAfetadas>0){
+                    System.out.println("removido com sucesso");
+                }else{
+                    System.out.println("erro");
+                }
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
 
     }
 
