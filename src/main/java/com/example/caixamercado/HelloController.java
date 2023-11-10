@@ -137,12 +137,12 @@ public class HelloController implements Initializable {
         Produto produtoEncontrado = produtosDAO.BuscarProduto(i);
 
 
-        if (produtoEncontrado != null) {
-
-            System.out.println("ID: " + produtoEncontrado.getCodigo() +
-                    ", Nome: " + produtoEncontrado.getDescricao() +
-                    ", Preço: " + produtoEncontrado.getValorUnitario());
-        }
+//        if (produtoEncontrado != null) {
+//
+//            System.out.println("ID: " + produtoEncontrado.getCodigo() +
+//                    ", Nome: " + produtoEncontrado.getDescricao() +
+//                    ", Preço: " + produtoEncontrado.getValorUnitario());
+//        }
 
 
         if (produtoEncontrado != null) {
@@ -151,6 +151,7 @@ public class HelloController implements Initializable {
 
             double total = quantidade*produtoEncontrado.getValorUnitario();
            subtotal = total+ subtotal;
+
 
             produtoEncontrado.setQuantidade(quantidade);
             produtoEncontrado.setSubtotal(total);
@@ -164,6 +165,9 @@ public class HelloController implements Initializable {
         table_valor_unit.setCellValueFactory(cellData -> cellData.getValue().valorUnitarioProperty().asObject());
         table_quantidade.setCellValueFactory(cellData -> cellData.getValue().quantidadeProperty().asObject());
         table_total.setCellValueFactory(cellData -> cellData.getValue().subtotalProperty().asObject());
-
-        }
+        lbl_subtotal.setText(String.valueOf(subtotal));
+        lbl_valor_unit.setText(String.valueOf(produtoEncontrado.getValorUnitario()));
+        lbl_valor_total_item.setText(String.valueOf(produtoEncontrado.getSubtotal()));
+        cod_barras_text.clear();
+    }
     }
