@@ -9,7 +9,7 @@ public class database {
 
             // Estabelecer a conexão com o banco de dados
 
-            return DriverManager.getConnection("jdbc:sqlite:/home/linux/Documentos/dev/lp3/base.db");
+            return DriverManager.getConnection("jdbc:sqlite:base.db");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             return null; // Retornar null em caso de falha na conexão
