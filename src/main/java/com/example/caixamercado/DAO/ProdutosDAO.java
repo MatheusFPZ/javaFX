@@ -1,5 +1,6 @@
-package produtos;
+package com.example.caixamercado.DAO;
 
+import com.example.caixamercado.model.Produto;
 import config.database;
 
 import java.sql.Connection;
@@ -43,7 +44,7 @@ public class ProdutosDAO {
     }
 
 
-    public ProdutoModel BuscarProduto(int idProduto){
+    public Produto BuscarProduto(int idProduto){
         Connection conexao = database.conectar();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -59,8 +60,9 @@ public class ProdutosDAO {
 
                 if(resultSet.next()){
                     String descricao = resultSet.getString("descricao");
-                    double valor_unitario = resultSet.getDouble("valor_unitario");
-                    return new ProdutoModel(idProduto, descricao, valor_unitario);
+                    double valorUnitario = resultSet.getDouble("valor_unitario");
+
+                    return new Produto(idProduto, descricao, valorUnitario);
                     //System.out.println("codigo:"+idProduto+",descricao: "+ descricao+", valor: "+ valor_unitario);
                 }else {
                     System.out.println("nao encontrado");

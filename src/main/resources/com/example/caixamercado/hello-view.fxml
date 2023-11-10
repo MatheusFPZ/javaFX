@@ -166,9 +166,9 @@
           <TableColumn fx:id="table_n_item" prefWidth="109.0" text="N Item" />
             <TableColumn fx:id="table_codigo" editable="false" minWidth="0.0" prefWidth="89.0" text="Código " />
             <TableColumn fx:id="table_descricao" prefWidth="235.0" text="Descrição" />
-            <TableColumn prefWidth="67.0" text="Qtd" />
+            <TableColumn fx:id="table_quantidade" prefWidth="67.0" text="Qtd" />
             <TableColumn fx:id="table_valor_unit" prefWidth="79.0" text="Vlr. Unit." />
-            <TableColumn prefWidth="50.0" text="Total" />
+            <TableColumn fx:id="table_total" prefWidth="50.0" text="Total" />
         </columns>
       </TableView>
       <ImageView fx:id="img_view" fitHeight="358.0" fitWidth="336.0" layoutX="51.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />

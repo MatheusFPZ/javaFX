@@ -1,5 +1,8 @@
 package com.example.caixamercado;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -10,8 +13,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import produtos.ProdutoModel;
-import produtos.ProdutosDAO;
+import com.example.caixamercado.model.Produto;
+import com.example.caixamercado.DAO.ProdutosDAO;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -66,8 +69,7 @@ public class HelloController implements Initializable {
     @FXML
     private Pane panel_valor_unit;
 
-    @FXML
-    private TableColumn<?, ?> table_n_item;
+
 
     @FXML
     private TextField titulo_table;
@@ -75,20 +77,30 @@ public class HelloController implements Initializable {
     private ImageView img_view;
 
     @FXML
-    private TableView<ProdutoModel> table;
+    private TableView<Produto> table;
+    @FXML
+    private TableColumn<Produto, Integer> table_n_item;
 
     @FXML
-    private TableColumn<ProdutoModel, Integer> table_codigo;
+    private TableColumn<Produto, Integer> table_codigo;
 
     @FXML
-    private TableColumn<ProdutoModel, String> table_descricao;
+    private TableColumn<Produto, String> table_descricao;
 
     @FXML
-    private TableColumn<ProdutoModel, Double> table_valor_unit;
+    private TableColumn<Produto, Double> table_valor_unit;
+    @FXML
+    private TableColumn<Produto, Integer> table_quantidade;
 
+    @FXML
+    private TableColumn<Produto, Double> table_total;
 
+    ObservableList<Produto> list  = FXCollections.observableArrayList();
+    private int contador = 1;
+    double subtotal = 0;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        cod_barras_text.setOnAction(event -> preencherTabela());
         panel_cod_barras.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         panel_subtotal.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         panel_total_item.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
@@ -104,27 +116,54 @@ public class HelloController implements Initializable {
         img_view.setImage(image);
 
         //ACOES BANCO DADOS
+
+
+
+    }
+    public void  preencherTabela() {
+        int quantidade = 1;
+//        if (!quantidade_text.getText().isEmpty()) {
+//            quantidade = Integer.parseInt(quantidade_text.getText());
+//        }
+
+
+        String idProdutoParaBuscar1 = cod_barras_text.getText();
+        int i = Integer.valueOf(idProdutoParaBuscar1);
+        System.out.println(idProdutoParaBuscar1);
+
+
         ProdutosDAO produtosDAO = new ProdutosDAO();
-        int idProdutoParaBuscar = 2;
-        ProdutoModel produtoEncontrado = produtosDAO.BuscarProduto(idProdutoParaBuscar);
+        int idProdutoParaBuscar = 1;
+        Produto produtoEncontrado = produtosDAO.BuscarProduto(i);
+
+
         if (produtoEncontrado != null) {
 
             System.out.println("ID: " + produtoEncontrado.getCodigo() +
                     ", Nome: " + produtoEncontrado.getDescricao() +
-                    ", Preço: " + produtoEncontrado.getValor_unitario());
-        }
-        public void  preencherTabela() {
-            ProdutoModel produtoEncontrado2 = produtosDAO.BuscarProduto(idProdutoParaBuscar);
-
-            if(produtoEncontrado2!=null){
-                table.getItems().clear();
-
-                table.getItems().add(produtoEncontrado2);
-                //table_codigo.setCellValueFactory(cellData -> cellData.getValue().codigoProperty());
-                table_descricao.setCellValueFactory(cellData -> cellData.getValue().descricaoProperty());
-                //table_valor_unit.setCellValueFactory(cellData -> cellData.getValue().valor_unitarioProperty());
-            }
+                    ", Preço: " + produtoEncontrado.getValorUnitario());
         }
 
+
+        if (produtoEncontrado != null) {
+            //list.clear();
+            list.add(produtoEncontrado);
+
+            double total = quantidade*produtoEncontrado.getValorUnitario();
+           subtotal = total+ subtotal;
+
+            produtoEncontrado.setQuantidade(quantidade);
+            produtoEncontrado.setSubtotal(total);
+            produtoEncontrado.setContador(contador++);
+        }
+
+            table.setItems(list);
+            table_n_item.setCellValueFactory(cellData -> cellData.getValue().contadorProperty().asObject());
+            table_codigo.setCellValueFactory(cellData -> cellData.getValue().codigoProperty().asObject());
+        table_descricao.setCellValueFactory(cellData -> cellData.getValue().descricaoProperty());
+        table_valor_unit.setCellValueFactory(cellData -> cellData.getValue().valorUnitarioProperty().asObject());
+        table_quantidade.setCellValueFactory(cellData -> cellData.getValue().quantidadeProperty().asObject());
+        table_total.setCellValueFactory(cellData -> cellData.getValue().subtotalProperty().asObject());
+
+        }
     }
-}
