@@ -1,6 +1,5 @@
 package com.example.caixamercado;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,6 +10,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import com.example.caixamercado.model.Produto;
@@ -68,9 +69,12 @@ public class HelloController implements Initializable {
 
     @FXML
     private Pane panel_valor_unit;
+    @FXML
+    private TextField lbl_quantidade;
 
 
-
+    @FXML
+    private Label valor_alterar_label;
     @FXML
     private TextField titulo_table;
     @FXML
@@ -94,10 +98,90 @@ public class HelloController implements Initializable {
 
     @FXML
     private TableColumn<Produto, Double> table_total;
+    @FXML
+    void nova_venda(KeyEvent event) {
+        if (event.getCode() == KeyCode.F5) {
+            preencherTabela();
+        }
+    }
+    @FXML
+    void remover_produto(KeyEvent event) {
+        if (event.getCode() == KeyCode.F11) {
+            removerLinhaSelecionada();
+        }
+    }
+    @FXML
+    void finalizar(KeyEvent event) {
+        if (event.getCode() == KeyCode.F10) {
+            finalizarCompra();
+        }
+    }
+
+    @FXML
+    void removerLinhaSelecionada() {
+        ObservableList<Produto> produtosSelecionados, todosProdutos;
+        todosProdutos = table.getItems();
+
+        // Obtém a lista de produtos selecionados
+        produtosSelecionados = table.getSelectionModel().getSelectedItems();
+
+        // Obtém a posição do primeiro item selecionado
+        int posicaoRemocao = todosProdutos.indexOf(produtosSelecionados.get(0));
+
+        // Remove todos os produtos selecionados da tabela
+        todosProdutos.removeAll(produtosSelecionados);
+
+        // Recalcula o contador e o subtotal
+        int novoContador = recalcularContador();
+        double novoSubtotal = recalcularSubtotal();
+
+        // Atualiza os campos na interface gráfica (se necessário)
+        //table_n_item.setText(String.valueOf(novoContador));
+        lbl_subtotal.setText(String.valueOf(novoSubtotal));
+
+        // Atualiza os contadores dos itens restantes
+        for (int i = posicaoRemocao; i < todosProdutos.size(); i++) {
+            Produto produto = todosProdutos.get(i);
+            produto.setContador(i + 1); // Adapte conforme necessário
+        }
+
+        // Atualiza a tabela para refletir as alterações
+        table.refresh();
+    }
+
+
+    private int recalcularContador() {
+        ObservableList<Produto> produtos = table.getItems();
+        int novoContador = 0;
+
+        for (Produto produto : produtos) {
+            novoContador += produto.getQuantidade();
+        }
+
+        return novoContador;
+    }
+
+    private double recalcularSubtotal() {
+        ObservableList<Produto> produtos = table.getItems();
+        double novoSubtotal = 0;
+
+        for (Produto produto : produtos) {
+            novoSubtotal += produto.getQuantidade() * produto.getValorUnitario();
+        }
+
+        return novoSubtotal;
+    }
+
+    private void finalizarCompra(){
+        System.out.println("terminou");
+
+    }
 
     ObservableList<Produto> list  = FXCollections.observableArrayList();
     private int contador = 1;
     double subtotal = 0;
+    //int novaQuantidade= 1;
+    int quantidade =1;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cod_barras_text.setOnAction(event -> preencherTabela());
@@ -121,10 +205,21 @@ public class HelloController implements Initializable {
 
     }
     public void  preencherTabela() {
-        int quantidade = 1;
-//        if (!quantidade_text.getText().isEmpty()) {
-//            quantidade = Integer.parseInt(quantidade_text.getText());
+
+        //lbl_quantidade.setDisable(true);
+        panel_cod_barras.setDisable(false);
+
+
+//        if(novaQuantidade>1){
+//            quantidade = novaQuantidade;
+//        }else{
+//            quantidade =1;
 //        }
+
+        if (!lbl_quantidade.getText().isEmpty()) {
+            quantidade = Integer.parseInt(lbl_quantidade.getText());
+
+        }
 
 
         String idProdutoParaBuscar1 = cod_barras_text.getText();
@@ -159,7 +254,8 @@ public class HelloController implements Initializable {
         }
 
             table.setItems(list);
-            table_n_item.setCellValueFactory(cellData -> cellData.getValue().contadorProperty().asObject());
+
+        table_n_item.setCellValueFactory(cellData -> cellData.getValue().contadorProperty().asObject());
             table_codigo.setCellValueFactory(cellData -> cellData.getValue().codigoProperty().asObject());
         table_descricao.setCellValueFactory(cellData -> cellData.getValue().descricaoProperty());
         table_valor_unit.setCellValueFactory(cellData -> cellData.getValue().valorUnitarioProperty().asObject());
@@ -169,5 +265,8 @@ public class HelloController implements Initializable {
         lbl_valor_unit.setText(String.valueOf(produtoEncontrado.getValorUnitario()));
         lbl_valor_total_item.setText(String.valueOf(produtoEncontrado.getSubtotal()));
         cod_barras_text.clear();
+        lbl_quantidade.clear();
+        quantidade =1;
     }
     }
+

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.caixamercado.HelloController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#nova_venda" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.caixamercado.HelloController">
    <children>
       <VBox fx:id="funcoes" layoutX="435.0" layoutY="542.0" prefHeight="102.0" prefWidth="219.0">
          <children>
@@ -22,7 +22,7 @@
       </VBox>
       <VBox layoutX="441.0" layoutY="31.0" prefHeight="96.0" prefWidth="238.0">
          <children>
-            <Pane fx:id="panel_cod_barras" prefHeight="200.0" prefWidth="200.0">
+            <Pane fx:id="panel_cod_barras" disable="true" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0" text="CÓDIGO DE BARRAS">
                      <font>
@@ -147,21 +147,17 @@
          <children>
             <Pane fx:id="panel_desconhecido" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0">
+                  <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0" text="QUANTIDADE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="35.0" layoutY="48.0" prefHeight="31.0" prefWidth="168.0" text="000000">
-                     <font>
-                        <Font size="26.0" />
-                     </font>
-                  </Label>
+                  <TextField fx:id="lbl_quantidade" layoutX="11.0" layoutY="50.0" prefHeight="34.0" prefWidth="219.0" />
                </children>
             </Pane>
          </children>
       </VBox>
-      <TableView fx:id="table" layoutX="685.0" layoutY="55.0" prefHeight="358.0" prefWidth="630.0">
+      <TableView fx:id="table" layoutX="685.0" layoutY="55.0" onKeyPressed="#remover_produto" prefHeight="358.0" prefWidth="630.0">
         <columns>
           <TableColumn fx:id="table_n_item" prefWidth="109.0" text="N Item" />
             <TableColumn fx:id="table_codigo" editable="false" minWidth="0.0" prefWidth="89.0" text="Código " />
