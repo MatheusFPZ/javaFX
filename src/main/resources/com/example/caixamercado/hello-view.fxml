@@ -11,65 +11,140 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#nova_venda" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.caixamercado.HelloController">
    <children>
-      <VBox fx:id="funcoes" layoutX="435.0" layoutY="542.0" prefHeight="102.0" prefWidth="219.0">
+      <Pane fx:id="panel_pagamento" prefHeight="545.0" prefWidth="682.0" visible="false">
          <children>
-            <Label text="F5 NOVA VENDA" />
-            <Label text="F11 EXCLUIR ITEM" />
-            <Label text="F4 QUANTIDADE" />
-            <Label prefHeight="16.0" prefWidth="125.0" text="F10 FINALIZAR" />
-            <Label prefHeight="16.0" prefWidth="185.0" text="F6 - CODIGO INTERNO" />
-         </children>
-      </VBox>
-      <VBox layoutX="441.0" layoutY="31.0" prefHeight="96.0" prefWidth="238.0">
-         <children>
-            <Pane fx:id="panel_cod_barras" disable="true" prefHeight="200.0" prefWidth="200.0">
+            <VBox layoutX="54.0" layoutY="119.0" prefHeight="96.0" prefWidth="238.0">
                <children>
-                  <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0" text="CÓDIGO DE BARRAS">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="cod_barras_text" layoutX="7.0" layoutY="50.0" prefHeight="35.0" prefWidth="226.0" />
+                  <Pane fx:id="panel_nome" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="219.0" text="nome">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="input_nome" layoutX="7.0" layoutY="50.0" prefHeight="35.0" prefWidth="226.0" />
+                     </children>
+                  </Pane>
                </children>
-            </Pane>
-         </children>
-      </VBox>
-      <VBox layoutX="441.0" layoutY="160.0" prefHeight="96.0" prefWidth="238.0">
-         <children>
-            <Pane fx:id="panel_valor_unit" prefHeight="200.0" prefWidth="200.0">
+            </VBox>
+            <VBox layoutX="379.0" layoutY="119.0" prefHeight="96.0" prefWidth="238.0">
                <children>
-                  <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0" text="VALOR UNITÁRIO">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lbl_valor_unit" layoutX="119.0" layoutY="50.0" prefHeight="31.0" prefWidth="108.0" text="R$ 0,00">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
+                  <Pane fx:id="panel_cpf" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="219.0" text="cpf">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="input_cpf" layoutX="7.0" layoutY="50.0" prefHeight="35.0" prefWidth="226.0" />
+                     </children>
+                  </Pane>
                </children>
-            </Pane>
-         </children>
-      </VBox>
-      <VBox layoutX="441.0" layoutY="288.0" prefHeight="96.0" prefWidth="238.0">
-         <children>
-            <Pane fx:id="panel_total_item" prefHeight="200.0" prefWidth="200.0">
+            </VBox>
+            <VBox layoutX="54.0" layoutY="345.0" prefHeight="96.0" prefWidth="238.0">
                <children>
-                  <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0" text="TOTAL DO ITEM">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lbl_valor_total_item" layoutX="112.0" layoutY="48.0" text="R$ 0,00">
-                     <font>
-                        <Font size="26.0" />
-                     </font>
-                  </Label>
+                  <Pane fx:id="panel_dinheiro" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="219.0" text="dinheiro">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="input_dinheiro" layoutX="7.0" layoutY="50.0" prefHeight="35.0" prefWidth="226.0" />
+                     </children>
+                  </Pane>
                </children>
-            </Pane>
+            </VBox>
+            <Label layoutX="47.0" layoutY="315.0" text="Forma de pagamento" />
          </children>
-      </VBox>
+      </Pane>
+      <Pane fx:id="panel_varios" prefHeight="567.0" prefWidth="682.0" visible="false">
+         <children>
+            <ImageView fx:id="img_view" fitHeight="358.0" fitWidth="336.0" layoutX="40.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox layoutX="418.0" layoutY="47.0" prefHeight="96.0" prefWidth="238.0">
+               <children>
+                  <Pane fx:id="panel_cod_barras" disable="true" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0" text="CÓDIGO DE BARRAS">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="cod_barras_text" layoutX="7.0" layoutY="50.0" prefHeight="35.0" prefWidth="226.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+            <VBox layoutX="418.0" layoutY="173.0" prefHeight="96.0" prefWidth="238.0">
+               <children>
+                  <Pane fx:id="panel_valor_unit" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0" text="VALOR UNITÁRIO">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lbl_valor_unit" layoutX="119.0" layoutY="50.0" prefHeight="31.0" prefWidth="108.0" text="R$ 0,00">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+            <VBox layoutX="418.0" layoutY="297.0" prefHeight="96.0" prefWidth="238.0">
+               <children>
+                  <Pane fx:id="panel_total_item" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0" text="TOTAL DO ITEM">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lbl_valor_total_item" layoutX="112.0" layoutY="48.0" text="R$ 0,00">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+            <VBox layoutX="67.0" layoutY="429.0" prefHeight="96.0" prefWidth="238.0">
+               <children>
+                  <Pane fx:id="panel_cod_interno" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0" text="CÓDIGO">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lbl_cod_interno" layoutX="35.0" layoutY="48.0" prefHeight="31.0" prefWidth="168.0" text="000000">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+            <VBox layoutX="418.0" layoutY="416.0" prefHeight="96.0" prefWidth="238.0">
+               <children>
+                  <Pane fx:id="panel_desconhecido" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0" text="QUANTIDADE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="lbl_quantidade" layoutX="11.0" layoutY="50.0" prefHeight="34.0" prefWidth="219.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
       <VBox layoutX="686.0" layoutY="419.0" prefHeight="96.0" prefWidth="630.0">
          <children>
             <Pane fx:id="panel_subtotal" prefHeight="200.0" prefWidth="200.0">
@@ -125,38 +200,6 @@
          </children>
       </VBox>
       <TextField fx:id="titulo_table" alignment="CENTER" layoutX="686.0" layoutY="31.0" prefHeight="24.0" prefWidth="630.0" text="LISTA DE PRODUTOS" />
-      <VBox layoutX="85.0" layoutY="399.0" prefHeight="96.0" prefWidth="238.0">
-         <children>
-            <Pane fx:id="panel_cod_interno" prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0" text="CÓDIGO">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lbl_cod_interno" layoutX="35.0" layoutY="48.0" prefHeight="31.0" prefWidth="168.0" text="000000">
-                     <font>
-                        <Font size="26.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-         </children>
-      </VBox>
-      <VBox layoutX="441.0" layoutY="399.0" prefHeight="96.0" prefWidth="238.0">
-         <children>
-            <Pane fx:id="panel_desconhecido" prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0" text="QUANTIDADE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="lbl_quantidade" layoutX="11.0" layoutY="50.0" prefHeight="34.0" prefWidth="219.0" />
-               </children>
-            </Pane>
-         </children>
-      </VBox>
       <TableView fx:id="table" layoutX="685.0" layoutY="55.0" onKeyPressed="#remover_produto" prefHeight="358.0" prefWidth="630.0">
         <columns>
           <TableColumn fx:id="table_n_item" prefWidth="109.0" text="N Item" />
@@ -167,6 +210,15 @@
             <TableColumn fx:id="table_total" prefWidth="50.0" text="Total" />
         </columns>
       </TableView>
-      <ImageView fx:id="img_view" fitHeight="358.0" fitWidth="336.0" layoutX="51.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox fx:id="funcoes" layoutX="451.0" layoutY="559.0" prefHeight="102.0" prefWidth="219.0">
+         <children>
+            <Label fx:id="lbl_nova_venda" text="F5 NOVA VENDA" />
+            <Label fx:id="lbl_excluir" text="F11 EXCLUIR ITEM" />
+            <Label fx:id="lbl_quantidadeL" text="F4 QUANTIDADE" />
+            <Label fx:id="lbl_finalizar" onKeyPressed="#finalizar" onMouseClicked="#finalizar" prefHeight="16.0" prefWidth="125.0" text="F10 FINALIZAR" />
+            <Label fx:id="lbl_codigoInterno" prefHeight="16.0" prefWidth="185.0" text="F6 - CODIGO INTERNO" />
+            <Label fx:id="lbl_gerar_nota" onMouseClicked="#imprime_nota" prefHeight="16.0" prefWidth="185.0" text="F7 - GERAR NOTA" />
+         </children>
+      </VBox>
    </children>
 </Pane>

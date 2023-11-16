@@ -12,10 +12,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import com.example.caixamercado.model.Produto;
 import com.example.caixamercado.DAO.ProdutosDAO;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,12 +50,21 @@ public class HelloController implements Initializable {
 
     @FXML
     private Pane panel_cod_barras;
+    @FXML
+    private Pane panel_dinheiro;
 
+    @FXML
+    private Pane panel_nome;
+    @FXML
+    private Pane panel_cpf;
     @FXML
     private Pane panel_cod_interno;
 
     @FXML
     private Pane panel_desconhecido;
+
+    @FXML
+    private Pane panel_pagamento;
 
     @FXML
     private Pane panel_subtotal;
@@ -69,6 +80,10 @@ public class HelloController implements Initializable {
 
     @FXML
     private Pane panel_valor_unit;
+
+    @FXML
+    private Pane panel_varios;
+
     @FXML
     private TextField lbl_quantidade;
 
@@ -88,6 +103,7 @@ public class HelloController implements Initializable {
     @FXML
     private TableColumn<Produto, Integer> table_codigo;
 
+
     @FXML
     private TableColumn<Produto, String> table_descricao;
 
@@ -98,6 +114,38 @@ public class HelloController implements Initializable {
 
     @FXML
     private TableColumn<Produto, Double> table_total;
+    @FXML
+    private TextField input_cpf;
+
+    @FXML
+    private TextField input_dinheiro;
+
+    @FXML
+    private TextField input_nome;
+
+    @FXML
+    private Label lbl_codigoInterno;
+
+    @FXML
+    private Label lbl_excluir;
+
+    @FXML
+    private Label lbl_finalizar;
+
+    @FXML
+    private Label lbl_gerar_nota;
+
+    @FXML
+    private Label lbl_nova_venda;
+
+    @FXML
+    private Label lbl_quantidadeL;
+
+    @FXML
+    void imprime_nota(MouseEvent event) {
+            imprime_nota();
+    }
+
     @FXML
     void nova_venda(KeyEvent event) {
         if (event.getCode() == KeyCode.F5) {
@@ -110,13 +158,13 @@ public class HelloController implements Initializable {
             removerLinhaSelecionada();
         }
     }
-    @FXML
-    void finalizar(KeyEvent event) {
-        if (event.getCode() == KeyCode.F10) {
-            finalizarCompra();
-        }
-    }
 
+    @FXML
+    void finalizar(MouseEvent event) {
+
+            finalizarCompra();
+
+    }
     @FXML
     void removerLinhaSelecionada() {
         ObservableList<Produto> produtosSelecionados, todosProdutos;
@@ -172,10 +220,7 @@ public class HelloController implements Initializable {
         return novoSubtotal;
     }
 
-    private void finalizarCompra(){
-        System.out.println("terminou");
 
-    }
 
     ObservableList<Produto> list  = FXCollections.observableArrayList();
     private int contador = 1;
@@ -185,6 +230,9 @@ public class HelloController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cod_barras_text.setOnAction(event -> preencherTabela());
+        panel_dinheiro.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
+        panel_cpf.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
+        panel_nome.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         panel_cod_barras.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         panel_subtotal.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         panel_total_item.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
@@ -200,11 +248,89 @@ public class HelloController implements Initializable {
         img_view.setImage(image);
 
         //ACOES BANCO DADOS
+        panel_varios.setVisible(true);
+
+        lbl_excluir.setDisable(true);
+        lbl_quantidadeL.setDisable(true);
+        lbl_finalizar.setDisable(true);
+        lbl_codigoInterno.setDisable(true);
+lbl_gerar_nota.setDisable(true);
+
+
+    }
+
+    private void finalizarCompra(){
+
+        panel_varios.setVisible(false);
+        panel_pagamento.setVisible(true);
+        lbl_nova_venda.setDisable(true);
+        lbl_excluir.setDisable(true);
+        lbl_quantidadeL.setDisable(true);
+        lbl_finalizar.setDisable(true);
+        lbl_codigoInterno.setDisable(true);
+        lbl_gerar_nota.setDisable(false);
+
+//
+//
+//
+//
+//        double total = subtotal;
+//
+//
+
+    }
+
+    public void imprime_nota(){
+
+
+        lbl_nova_venda.setDisable(false);
+
+        if (!input_nome.getText().isEmpty()&& !input_dinheiro.getText().isEmpty() && !input_cpf.getText().isEmpty()) {
+            System.out.println("////////NOTA FISCAL/////////");
+            String nome = input_nome.getText();
+            String cpf = input_cpf.getText();
+            double dinheiro = Integer.valueOf(input_dinheiro.getText());
+            double sub = subtotal;
+            double feito = dinheiro-sub;
+            lbl_troco.setText(String.valueOf(feito));
+            System.out.println("nome: "+ nome+"\ncpf: "+cpf);
+            for(Produto produto: list){
+                System.out.println("item    |    valor unitario    |      quantidade");
+                System.out.println(produto.getDescricao()+"          "+produto.getValorUnitario()+"          "+produto.getQuantidade());
+            }
+            System.out.println("\ntotal: "+ sub);
+            System.out.println("dinheiro: "+ dinheiro);
+            System.out.println("__________________");
+            System.out.println("troco: "+ feito);
+
+            System.out.println("///////////NOTA FISCAL//////////////");
+                input_nome.clear();
+                input_cpf.clear();
+                input_dinheiro.clear();
+        }
 
 
 
     }
     public void  preencherTabela() {
+
+        lbl_valor_unit.setText("0.0");
+        lbl_valor_total_item.setText("0.0");
+        lbl_subtotal.setText("0.0");
+        lbl_troco.setText("0.0");
+
+
+
+
+        panel_pagamento.setVisible(false);
+        panel_varios.setVisible(true);
+
+        lbl_nova_venda.setDisable(true);
+        lbl_gerar_nota.setDisable(true);
+        lbl_excluir.setDisable(false);
+        lbl_quantidadeL.setDisable(false);
+        lbl_finalizar.setDisable(false);
+        lbl_codigoInterno.setDisable(false);
 
         //lbl_quantidade.setDisable(true);
         panel_cod_barras.setDisable(false);
@@ -268,5 +394,13 @@ public class HelloController implements Initializable {
         lbl_quantidade.clear();
         quantidade =1;
     }
+
+    public void calculaDesconto(int idProduto){
+        if(idProduto ==1){
+            System.out.println("teste");
+        }
+
+    }
+
     }
 
