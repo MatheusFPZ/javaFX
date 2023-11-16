@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.PointLight;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -225,7 +226,7 @@ public class HelloController implements Initializable {
     ObservableList<Produto> list  = FXCollections.observableArrayList();
     private int contador = 1;
     double subtotal = 0;
-    //int novaQuantidade= 1;
+
     int quantidade =1;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -246,15 +247,13 @@ public class HelloController implements Initializable {
         titulo_table.setStyle("-fx-background-color: orange;");
         Image image = new Image("file:/home/linux/Downloads/3549578.jpg");
         img_view.setImage(image);
-
-        //ACOES BANCO DADOS
         panel_varios.setVisible(true);
 
         lbl_excluir.setDisable(true);
         lbl_quantidadeL.setDisable(true);
         lbl_finalizar.setDisable(true);
         lbl_codigoInterno.setDisable(true);
-lbl_gerar_nota.setDisable(true);
+        lbl_gerar_nota.setDisable(true);
 
 
     }
@@ -269,14 +268,6 @@ lbl_gerar_nota.setDisable(true);
         lbl_finalizar.setDisable(true);
         lbl_codigoInterno.setDisable(true);
         lbl_gerar_nota.setDisable(false);
-
-//
-//
-//
-//
-//        double total = subtotal;
-//
-//
 
     }
 
@@ -309,9 +300,10 @@ lbl_gerar_nota.setDisable(true);
                 input_dinheiro.clear();
         }
 
-
+        table.getItems().clear();
 
     }
+
     public void  preencherTabela() {
 
         lbl_valor_unit.setText("0.0");
@@ -371,15 +363,17 @@ lbl_gerar_nota.setDisable(true);
             list.add(produtoEncontrado);
 
             double total = quantidade*produtoEncontrado.getValorUnitario();
-           subtotal = total+ subtotal;
+
+            double total2 = total2+total;
 
 
             produtoEncontrado.setQuantidade(quantidade);
-            produtoEncontrado.setSubtotal(total);
+            produtoEncontrado.setSubtotal(total2);
             produtoEncontrado.setContador(contador++);
         }
 
             table.setItems(list);
+
 
         table_n_item.setCellValueFactory(cellData -> cellData.getValue().contadorProperty().asObject());
             table_codigo.setCellValueFactory(cellData -> cellData.getValue().codigoProperty().asObject());
@@ -387,12 +381,14 @@ lbl_gerar_nota.setDisable(true);
         table_valor_unit.setCellValueFactory(cellData -> cellData.getValue().valorUnitarioProperty().asObject());
         table_quantidade.setCellValueFactory(cellData -> cellData.getValue().quantidadeProperty().asObject());
         table_total.setCellValueFactory(cellData -> cellData.getValue().subtotalProperty().asObject());
-        lbl_subtotal.setText(String.valueOf(subtotal));
+        
+        lbl_subtotal.setText(String.valueOf(produtoEncontrado.getSubtotal()));
         lbl_valor_unit.setText(String.valueOf(produtoEncontrado.getValorUnitario()));
         lbl_valor_total_item.setText(String.valueOf(produtoEncontrado.getSubtotal()));
         cod_barras_text.clear();
         lbl_quantidade.clear();
         quantidade =1;
+
     }
 
     public void calculaDesconto(int idProduto){

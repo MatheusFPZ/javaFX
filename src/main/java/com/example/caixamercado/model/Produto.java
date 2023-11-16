@@ -98,4 +98,13 @@ public class Produto {
         return contador;
     }
 
+
+
+    public  void limpar(){
+
+        this.descricao.set(" ");
+        this.total.set(0);
+        this.valorUnitario.set(0);
+        this.codigo.set(0);
+    }
 }
