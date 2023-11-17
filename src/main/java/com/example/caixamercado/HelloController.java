@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.PointLight;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,7 +17,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import com.example.caixamercado.model.Produto;
 import com.example.caixamercado.DAO.ProdutosDAO;
-import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -144,13 +142,14 @@ public class HelloController implements Initializable {
 
     @FXML
     void imprime_nota(MouseEvent event) {
+
             imprime_nota();
     }
 
     @FXML
     void nova_venda(KeyEvent event) {
         if (event.getCode() == KeyCode.F5) {
-            preencherTabela();
+            preencherTabela(0);
         }
     }
     @FXML
@@ -226,11 +225,12 @@ public class HelloController implements Initializable {
     ObservableList<Produto> list  = FXCollections.observableArrayList();
     private int contador = 1;
     double subtotal = 0;
+    double aux=0;
 
     int quantidade =1;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cod_barras_text.setOnAction(event -> preencherTabela());
+        cod_barras_text.setOnAction(event -> preencherTabela(0));
         panel_dinheiro.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         panel_cpf.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         panel_nome.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
@@ -271,40 +271,49 @@ public class HelloController implements Initializable {
 
     }
 
-    public void imprime_nota(){
+    public void imprime_nota() {
 
 
         lbl_nova_venda.setDisable(false);
 
-        if (!input_nome.getText().isEmpty()&& !input_dinheiro.getText().isEmpty() && !input_cpf.getText().isEmpty()) {
+
             System.out.println("////////NOTA FISCAL/////////");
             String nome = input_nome.getText();
             String cpf = input_cpf.getText();
             double dinheiro = Integer.valueOf(input_dinheiro.getText());
             double sub = subtotal;
-            double feito = dinheiro-sub;
+            double feito = dinheiro - sub;
             lbl_troco.setText(String.valueOf(feito));
-            System.out.println("nome: "+ nome+"\ncpf: "+cpf);
-            for(Produto produto: list){
+            System.out.println("nome: " + nome + "\ncpf: " + cpf);
+            for (Produto produto : list) {
                 System.out.println("item    |    valor unitario    |      quantidade");
-                System.out.println(produto.getDescricao()+"          "+produto.getValorUnitario()+"          "+produto.getQuantidade());
+                System.out.println(produto.getDescricao() + "          " + produto.getValorUnitario() + "          " + produto.getQuantidade());
             }
-            System.out.println("\ntotal: "+ sub);
-            System.out.println("dinheiro: "+ dinheiro);
+            System.out.println("\ntotal: " + sub);
+            System.out.println("dinheiro: " + dinheiro);
             System.out.println("__________________");
-            System.out.println("troco: "+ feito);
+            System.out.println("troco: " + feito);
 
             System.out.println("///////////NOTA FISCAL//////////////");
-                input_nome.clear();
-                input_cpf.clear();
-                input_dinheiro.clear();
-        }
+            input_nome.clear();
+            input_cpf.clear();
+            input_dinheiro.clear();
 
-        table.getItems().clear();
+            table.getItems().clear();
+            list.clear();
 
+
+
+        preencherTabela(1);
     }
 
-    public void  preencherTabela() {
+    public void preencherTabela(int imprimiu) {
+
+        if(imprimiu==1){
+            table.getItems().clear();
+            subtotal=0;
+            contador=1;
+        }
 
         lbl_valor_unit.setText("0.0");
         lbl_valor_total_item.setText("0.0");
@@ -342,7 +351,7 @@ public class HelloController implements Initializable {
 
         String idProdutoParaBuscar1 = cod_barras_text.getText();
         int i = Integer.valueOf(idProdutoParaBuscar1);
-        System.out.println(idProdutoParaBuscar1);
+        //System.out.println(idProdutoParaBuscar1);
 
 
         ProdutosDAO produtosDAO = new ProdutosDAO();
@@ -356,20 +365,27 @@ public class HelloController implements Initializable {
 //                    ", Nome: " + produtoEncontrado.getDescricao() +
 //                    ", Preço: " + produtoEncontrado.getValorUnitario());
 //        }
-
-
+        System.out.println("imprimiu????" + imprimiu);
+        if(imprimiu==1){
+            System.out.println("entrou nessa condicaoaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            table.getItems().clear();
+            list.clear();
+        }
         if (produtoEncontrado != null) {
             //list.clear();
             list.add(produtoEncontrado);
 
             double total = quantidade*produtoEncontrado.getValorUnitario();
+            System.out.println(total);
+            subtotal = total+subtotal;
 
-            double total2 = total2+total;
 
 
             produtoEncontrado.setQuantidade(quantidade);
-            produtoEncontrado.setSubtotal(total2);
+            produtoEncontrado.setTotal(total);
             produtoEncontrado.setContador(contador++);
+            produtoEncontrado.setSubtotal(subtotal);
+
         }
 
             table.setItems(list);
@@ -384,10 +400,12 @@ public class HelloController implements Initializable {
         
         lbl_subtotal.setText(String.valueOf(produtoEncontrado.getSubtotal()));
         lbl_valor_unit.setText(String.valueOf(produtoEncontrado.getValorUnitario()));
-        lbl_valor_total_item.setText(String.valueOf(produtoEncontrado.getSubtotal()));
+        lbl_valor_total_item.setText(String.valueOf(produtoEncontrado.getTotal()));
         cod_barras_text.clear();
         lbl_quantidade.clear();
         quantidade =1;
+        //System.out.println(imprime_nota());
+
 
     }
 

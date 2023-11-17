@@ -10,6 +10,9 @@ public class Produto {
     private final IntegerProperty quantidade = new SimpleIntegerProperty();
     private final DoubleProperty total = new SimpleDoubleProperty();
     private final IntegerProperty contador = new SimpleIntegerProperty();
+    private final DoubleProperty subtotal = new SimpleDoubleProperty();
+    private final IntegerProperty imprimiu = new SimpleIntegerProperty();
+
 
 
 
@@ -27,6 +30,18 @@ public class Produto {
 
     public void setCodigo(int codigo) {
         this.codigo.set(codigo);
+    }
+
+    public int getImprimiu() {
+        return imprimiu.get();
+    }
+
+    public IntegerProperty imprimiuProperty() {
+        return imprimiu;
+    }
+
+    public void setImprimiu(int imprimiu) {
+        this.imprimiu.set(imprimiu);
     }
 
     public IntegerProperty codigoProperty() {
@@ -73,12 +88,20 @@ public class Produto {
     }
 
     // Métodos de acesso para subtotal
-    public double getSubtotal() {
+    public double getTotal() {
         return total.get();
     }
 
+    public void setTotal(double total) {
+        this.total.set(total);
+    }
+
+    public double getSubtotal() {
+        return subtotal.get();
+    }
+
     public void setSubtotal(double subtotal) {
-        this.total.set(subtotal);
+        this.subtotal.set(subtotal);
     }
 
     public DoubleProperty subtotalProperty() {
@@ -106,5 +129,6 @@ public class Produto {
         this.total.set(0);
         this.valorUnitario.set(0);
         this.codigo.set(0);
+        this.subtotal.set(0);
     }
 }
