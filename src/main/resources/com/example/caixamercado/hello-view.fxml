@@ -210,7 +210,7 @@
             <TableColumn fx:id="table_total" prefWidth="50.0" text="Total" />
         </columns>
       </TableView>
-      <VBox fx:id="funcoes" layoutX="451.0" layoutY="559.0" prefHeight="102.0" prefWidth="219.0">
+      <VBox fx:id="funcoes" layoutX="142.0" layoutY="567.0" prefHeight="102.0" prefWidth="219.0">
          <children>
             <Label fx:id="lbl_nova_venda" text="F5 NOVA VENDA" />
             <Label fx:id="lbl_excluir" text="F11 EXCLUIR ITEM" />
@@ -218,6 +218,24 @@
             <Label fx:id="lbl_finalizar" onKeyPressed="#finalizar" onMouseClicked="#finalizar" prefHeight="16.0" prefWidth="125.0" text="F10 FINALIZAR" />
             <Label fx:id="lbl_codigoInterno" prefHeight="16.0" prefWidth="185.0" text="F6 - CODIGO INTERNO" />
             <Label fx:id="lbl_gerar_nota" onMouseClicked="#imprime_nota" prefHeight="16.0" prefWidth="185.0" text="F7 - GERAR NOTA" />
+         </children>
+      </VBox>
+      <VBox layoutX="381.0" layoutY="570.0" prefHeight="96.0" prefWidth="238.0">
+         <children>
+            <Pane fx:id="panel_valor_unit1" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="9.0" layoutY="6.0" prefHeight="44.0" prefWidth="247.0" text="DESCONTO">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl_desconto" layoutX="119.0" layoutY="50.0" prefHeight="31.0" prefWidth="108.0" text="R$ 0,00">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          </children>
       </VBox>
    </children>

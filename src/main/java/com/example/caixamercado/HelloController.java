@@ -141,6 +141,9 @@ public class HelloController implements Initializable {
     private Label lbl_quantidadeL;
 
     @FXML
+    private Label lbl_desconto;
+
+    @FXML
     void imprime_nota(MouseEvent event) {
 
             imprime_nota();
@@ -256,6 +259,8 @@ public class HelloController implements Initializable {
         lbl_gerar_nota.setDisable(true);
 
 
+
+
     }
 
     private void finalizarCompra(){
@@ -269,10 +274,16 @@ public class HelloController implements Initializable {
         lbl_codigoInterno.setDisable(true);
         lbl_gerar_nota.setDisable(false);
 
+
+
+
     }
 
     public void imprime_nota() {
-
+//        if(!input_dinheiro.getText().isEmpty()){
+//            lbl_troco.setText(input_dinheiro.getText());
+//
+//        }
 
         lbl_nova_venda.setDisable(false);
 
@@ -283,7 +294,9 @@ public class HelloController implements Initializable {
             double dinheiro = Integer.valueOf(input_dinheiro.getText());
             double sub = subtotal;
             double feito = dinheiro - sub;
-            lbl_troco.setText(String.valueOf(feito));
+        String numeroFormatado = String.format("%.2f", feito);
+            lbl_troco.setText(String.valueOf(numeroFormatado));
+            lbl_valor_total_rece.setText(String.valueOf(dinheiro));
             System.out.println("nome: " + nome + "\ncpf: " + cpf);
             for (Produto produto : list) {
                 System.out.println("item    |    valor unitario    |      quantidade");
@@ -297,12 +310,11 @@ public class HelloController implements Initializable {
             System.out.println("///////////NOTA FISCAL//////////////");
             input_nome.clear();
             input_cpf.clear();
+
             input_dinheiro.clear();
 
             table.getItems().clear();
             list.clear();
-
-
 
         preencherTabela(1);
     }
@@ -318,7 +330,7 @@ public class HelloController implements Initializable {
         lbl_valor_unit.setText("0.0");
         lbl_valor_total_item.setText("0.0");
         lbl_subtotal.setText("0.0");
-        lbl_troco.setText("0.0");
+        //lbl_troco.setText("0.0");
 
 
 
@@ -365,18 +377,29 @@ public class HelloController implements Initializable {
 //                    ", Nome: " + produtoEncontrado.getDescricao() +
 //                    ", Preço: " + produtoEncontrado.getValorUnitario());
 //        }
-        System.out.println("imprimiu????" + imprimiu);
+
         if(imprimiu==1){
-            System.out.println("entrou nessa condicaoaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
             table.getItems().clear();
             list.clear();
         }
         if (produtoEncontrado != null) {
             //list.clear();
+
+            double desconto = calculaDesconto(i, produtoEncontrado, quantidade);
+            if(desconto>0){
+
+                String numeroFormatado = String.format("%.2f", desconto);
+                lbl_desconto.setText(numeroFormatado);
+            }else{
+                lbl_desconto.setText("0.0");
+
+
+            }
             list.add(produtoEncontrado);
 
-            double total = quantidade*produtoEncontrado.getValorUnitario();
-            System.out.println(total);
+            double total = (quantidade*produtoEncontrado.getValorUnitario())-desconto;
+            System.out.println("teste desconto" + quantidade+ "," + produtoEncontrado.getValorUnitario()+","+ desconto);
             subtotal = total+subtotal;
 
 
@@ -388,6 +411,8 @@ public class HelloController implements Initializable {
 
         }
 
+        lbl_troco.setText("0.0");
+        lbl_valor_total_rece.setText("0.0");
             table.setItems(list);
 
 
@@ -409,11 +434,18 @@ public class HelloController implements Initializable {
 
     }
 
-    public void calculaDesconto(int idProduto){
-        if(idProduto ==1){
-            System.out.println("teste");
-        }
+    public double calculaDesconto(int idProduto, Produto produto, int quantidade) {
+        double desconto = 0;
+        if (idProduto == 1) {
 
+            double valor = produto.getValorUnitario();
+
+            System.out.println("valor unitario" + valor);
+            desconto = (valor * 0.1)*quantidade;
+
+            System.out.println(desconto);
+        }
+        return desconto;
     }
 
     }
