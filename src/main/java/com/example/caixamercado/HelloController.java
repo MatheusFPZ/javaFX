@@ -29,8 +29,6 @@ public class HelloController implements Initializable {
     @FXML
     private VBox funcoes;
 
-    @FXML
-    private Label lbl_cod_interno;
 
     @FXML
     private Label lbl_subtotal;
@@ -88,8 +86,6 @@ public class HelloController implements Initializable {
 
 
     @FXML
-    private Label valor_alterar_label;
-    @FXML
     private TextField titulo_table;
     @FXML
     private ImageView img_view;
@@ -142,6 +138,21 @@ public class HelloController implements Initializable {
 
     @FXML
     private Label lbl_desconto;
+
+    @FXML
+    private Label lbl_cod_cupom;
+
+
+    @FXML
+    private TextField lbl_cupom;
+
+    @FXML
+    private Pane panel_cupom;
+
+    @FXML
+    private Pane panel_descontos;
+
+
 
     @FXML
     void imprime_nota(MouseEvent event) {
@@ -201,6 +212,8 @@ public class HelloController implements Initializable {
     }
 
 
+
+
     private int recalcularContador() {
         ObservableList<Produto> produtos = table.getItems();
         int novoContador = 0;
@@ -228,7 +241,6 @@ public class HelloController implements Initializable {
     ObservableList<Produto> list  = FXCollections.observableArrayList();
     private int contador = 1;
     double subtotal = 0;
-    double aux=0;
 
     int quantidade =1;
     @Override
@@ -244,6 +256,8 @@ public class HelloController implements Initializable {
         panel_troco.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         panel_valor_unit.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         panel_cod_interno.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
+        panel_cupom.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
+        panel_descontos.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         funcoes.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         panel_desconhecido.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         cod_barras_text.setStyle("-fx-background-color: white;");
@@ -251,6 +265,7 @@ public class HelloController implements Initializable {
         Image image = new Image("file:/home/linux/Downloads/3549578.jpg");
         img_view.setImage(image);
         panel_varios.setVisible(true);
+
 
         lbl_excluir.setDisable(true);
         lbl_quantidadeL.setDisable(true);
@@ -273,39 +288,45 @@ public class HelloController implements Initializable {
         lbl_finalizar.setDisable(true);
         lbl_codigoInterno.setDisable(true);
         lbl_gerar_nota.setDisable(false);
+        panel_desconhecido.setVisible(false);
 
+        if(!lbl_cupom.getText().isEmpty()){
 
+            String label = lbl_cupom.getText();
+            if(label.equals(cupom)){
+                lbl_cod_cupom.setText(cupom);
+                subtotal = (subtotal-(subtotal*0.1));
+                lbl_subtotal.setText(String.valueOf(subtotal));
+            }
+        }
 
 
     }
 
     public void imprime_nota() {
-//        if(!input_dinheiro.getText().isEmpty()){
-//            lbl_troco.setText(input_dinheiro.getText());
-//
-//        }
+
 
         lbl_nova_venda.setDisable(false);
 
-
+        if(!input_nome.getText().isEmpty()&&Integer.parseInt(input_dinheiro.getText())>=subtotal){
             System.out.println("////////NOTA FISCAL/////////");
             String nome = input_nome.getText();
             String cpf = input_cpf.getText();
-            double dinheiro = Integer.valueOf(input_dinheiro.getText());
+            double dinheiro = Integer.parseInt(input_dinheiro.getText());
             double sub = subtotal;
             double feito = dinheiro - sub;
-        String numeroFormatado = String.format("%.2f", feito);
+            String numeroFormatado = String.format("%.2f", feito);
             lbl_troco.setText(String.valueOf(numeroFormatado));
             lbl_valor_total_rece.setText(String.valueOf(dinheiro));
             System.out.println("nome: " + nome + "\ncpf: " + cpf);
             for (Produto produto : list) {
-                System.out.println("item    |    valor unitario    |      quantidade");
+                System.out.println("item  |  valor unitario  |    quantidade");
                 System.out.println(produto.getDescricao() + "          " + produto.getValorUnitario() + "          " + produto.getQuantidade());
             }
-            System.out.println("\ntotal: " + sub);
+            System.out.println("\ntotal: " + String.format("%.2f", sub));
             System.out.println("dinheiro: " + dinheiro);
             System.out.println("__________________");
-            System.out.println("troco: " + feito);
+            System.out.println("troco: " + String.format("%.2f", feito));
 
             System.out.println("///////////NOTA FISCAL//////////////");
             input_nome.clear();
@@ -315,12 +336,14 @@ public class HelloController implements Initializable {
 
             table.getItems().clear();
             list.clear();
+            lbl_cod_cupom.setText("");
+            preencherTabela(1);
+        }
 
-        preencherTabela(1);
     }
 
     public void preencherTabela(int imprimiu) {
-
+        panel_desconhecido.setVisible(true);
         if(imprimiu==1){
             table.getItems().clear();
             subtotal=0;
@@ -330,10 +353,6 @@ public class HelloController implements Initializable {
         lbl_valor_unit.setText("0.0");
         lbl_valor_total_item.setText("0.0");
         lbl_subtotal.setText("0.0");
-        //lbl_troco.setText("0.0");
-
-
-
 
         panel_pagamento.setVisible(false);
         panel_varios.setVisible(true);
@@ -345,15 +364,8 @@ public class HelloController implements Initializable {
         lbl_finalizar.setDisable(false);
         lbl_codigoInterno.setDisable(false);
 
-        //lbl_quantidade.setDisable(true);
+
         panel_cod_barras.setDisable(false);
-
-
-//        if(novaQuantidade>1){
-//            quantidade = novaQuantidade;
-//        }else{
-//            quantidade =1;
-//        }
 
         if (!lbl_quantidade.getText().isEmpty()) {
             quantidade = Integer.parseInt(lbl_quantidade.getText());
@@ -362,21 +374,12 @@ public class HelloController implements Initializable {
 
 
         String idProdutoParaBuscar1 = cod_barras_text.getText();
-        int i = Integer.valueOf(idProdutoParaBuscar1);
-        //System.out.println(idProdutoParaBuscar1);
+        int i = Integer.parseInt(idProdutoParaBuscar1);
 
 
         ProdutosDAO produtosDAO = new ProdutosDAO();
-        int idProdutoParaBuscar = 1;
+
         Produto produtoEncontrado = produtosDAO.BuscarProduto(i);
-
-
-//        if (produtoEncontrado != null) {
-//
-//            System.out.println("ID: " + produtoEncontrado.getCodigo() +
-//                    ", Nome: " + produtoEncontrado.getDescricao() +
-//                    ", Preço: " + produtoEncontrado.getValorUnitario());
-//        }
 
         if(imprimiu==1){
 
@@ -384,9 +387,12 @@ public class HelloController implements Initializable {
             list.clear();
         }
         if (produtoEncontrado != null) {
-            //list.clear();
+            int categoria =produtoEncontrado.getCategoria();
 
-            double desconto = calculaDesconto(i, produtoEncontrado, quantidade);
+            double desconto = calculaDesconto(i, produtoEncontrado, quantidade, categoria);
+
+
+
             if(desconto>0){
 
                 String numeroFormatado = String.format("%.2f", desconto);
@@ -399,8 +405,9 @@ public class HelloController implements Initializable {
             list.add(produtoEncontrado);
 
             double total = (quantidade*produtoEncontrado.getValorUnitario())-desconto;
-            System.out.println("teste desconto" + quantidade+ "," + produtoEncontrado.getValorUnitario()+","+ desconto);
+
             subtotal = total+subtotal;
+
 
 
 
@@ -417,33 +424,41 @@ public class HelloController implements Initializable {
 
 
         table_n_item.setCellValueFactory(cellData -> cellData.getValue().contadorProperty().asObject());
-            table_codigo.setCellValueFactory(cellData -> cellData.getValue().codigoProperty().asObject());
+        table_codigo.setCellValueFactory(cellData -> cellData.getValue().codigoProperty().asObject());
         table_descricao.setCellValueFactory(cellData -> cellData.getValue().descricaoProperty());
         table_valor_unit.setCellValueFactory(cellData -> cellData.getValue().valorUnitarioProperty().asObject());
         table_quantidade.setCellValueFactory(cellData -> cellData.getValue().quantidadeProperty().asObject());
         table_total.setCellValueFactory(cellData -> cellData.getValue().subtotalProperty().asObject());
-        
-        lbl_subtotal.setText(String.valueOf(produtoEncontrado.getSubtotal()));
+        assert produtoEncontrado != null;
+        String numeroFormatado = String.format("%.2f", produtoEncontrado.getSubtotal());
+        lbl_subtotal.setText(numeroFormatado);
         lbl_valor_unit.setText(String.valueOf(produtoEncontrado.getValorUnitario()));
         lbl_valor_total_item.setText(String.valueOf(produtoEncontrado.getTotal()));
         cod_barras_text.clear();
         lbl_quantidade.clear();
         quantidade =1;
-        //System.out.println(imprime_nota());
-
-
     }
 
-    public double calculaDesconto(int idProduto, Produto produto, int quantidade) {
+    String cupom = "2035xc";
+
+
+    public double calculaDesconto(int idProduto, Produto produto, int quantidade, int categoria) {
         double desconto = 0;
         if (idProduto == 1) {
 
             double valor = produto.getValorUnitario();
 
-            System.out.println("valor unitario" + valor);
+
             desconto = (valor * 0.1)*quantidade;
 
-            System.out.println(desconto);
+
+        }
+        if(categoria==1){
+            double valor = produto.getValorUnitario();
+
+
+            desconto = (valor * 0.1)*quantidade;
+
         }
         return desconto;
     }

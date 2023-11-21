@@ -19,11 +19,6 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
 
-
-        // Chamar a função para buscar todos os produtos
-//produtosDAO.buscarTodosProdutos();
-        //produtosDAO.BuscarProduto(2);
-        //produtosDAO.RemoverProduto(1);
         launch();
     }
 }
