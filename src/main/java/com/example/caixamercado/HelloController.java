@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import com.example.caixamercado.model.Produto;
 import com.example.caixamercado.DAO.ProdutosDAO;
+import com.example.caixamercado.model.Venda;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -200,6 +201,7 @@ public class HelloController implements Initializable {
         // Atualiza os campos na interface gráfica (se necessário)
         //table_n_item.setText(String.valueOf(novoContador));
         lbl_subtotal.setText(String.valueOf(novoSubtotal));
+        subtotal = novoSubtotal;
 
         // Atualiza os contadores dos itens restantes
         for (int i = posicaoRemocao; i < todosProdutos.size(); i++) {
@@ -343,6 +345,7 @@ public class HelloController implements Initializable {
     }
 
     public void preencherTabela(int imprimiu) {
+        lbl_cod_cupom.setText("");
         panel_desconhecido.setVisible(true);
         if(imprimiu==1){
             table.getItems().clear();
@@ -408,6 +411,9 @@ public class HelloController implements Initializable {
 
             subtotal = total+subtotal;
 
+            System.out.println(produtoEncontrado.getDescricao());
+
+
 
 
 
@@ -415,6 +421,14 @@ public class HelloController implements Initializable {
             produtoEncontrado.setTotal(total);
             produtoEncontrado.setContador(contador++);
             produtoEncontrado.setSubtotal(subtotal);
+
+            Venda venda = new Venda();
+            double teste = venda.calcularDesconto(produtoEncontrado.getCodigo(), quantidade);
+            System.out.println(produtoEncontrado.getCodigo());
+
+            System.out.println("o valor de desconto por quantidade seria"+teste);
+
+
 
         }
 
@@ -439,7 +453,7 @@ public class HelloController implements Initializable {
         quantidade =1;
     }
 
-    String cupom = "2035xc";
+    String cupom = "teste";
 
 
     public double calculaDesconto(int idProduto, Produto produto, int quantidade, int categoria) {

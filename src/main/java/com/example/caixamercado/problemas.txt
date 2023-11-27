@@ -1,0 +1,2 @@
+depois de excluir ainda esta com problemas
+usar hashmap para armazenar aqueles descontos a cada 3 produtos

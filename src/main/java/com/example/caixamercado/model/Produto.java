@@ -14,15 +14,24 @@ public class Produto {
     private final IntegerProperty imprimiu = new SimpleIntegerProperty();
 
     private final IntegerProperty categoria = new SimpleIntegerProperty();
+    private final IntegerProperty quantidadeMinimaDesconto = new SimpleIntegerProperty();
+    private final DoubleProperty percentualDesconto = new SimpleDoubleProperty();
 
 
 
 
-    public Produto(int codigo, String descricao, double valorUnitario, int categoria) {
+    public Produto(int codigo, String descricao, double valorUnitario, int categoria,int quantidadeMinimaDesconto, double percentualDesconto) {
         this.codigo.set(codigo);
         this.descricao.set(descricao);
         this.valorUnitario.set(valorUnitario);
         this.categoria.set(categoria);
+        this.quantidadeMinimaDesconto.set(quantidadeMinimaDesconto);
+        this.percentualDesconto.set(percentualDesconto);
+
+    }
+    @Override
+    public String toString() {
+        return "Produto: " + getDescricao() + ", Quantidade: " + getQuantidade() + ", Valor Unitário: " + getValorUnitario();
     }
 
     public int getCategoria() {
@@ -134,7 +143,38 @@ public class Produto {
     public IntegerProperty contadorProperty() {
         return contador;
     }
+    public int getQuantidadeMinimaDesconto() {
+        return quantidadeMinimaDesconto.get();
+    }
 
+    public void setQuantidadeMinimaDesconto(int quantidadeMinimaDesconto) {
+        this.quantidadeMinimaDesconto.set(quantidadeMinimaDesconto);
+    }
+
+    public IntegerProperty quantidadeMinimaDescontoProperty() {
+        return quantidadeMinimaDesconto;
+    }
+
+    // Métodos de acesso para percentual de desconto
+    public double getPercentualDesconto() {
+        return percentualDesconto.get();
+    }
+
+    public void setPercentualDesconto(double percentualDesconto) {
+        this.percentualDesconto.set(percentualDesconto);
+    }
+
+    public DoubleProperty percentualDescontoProperty() {
+        return percentualDesconto;
+    }
+
+    // Método para calcular o desconto com base na quantidade comprada
+    public double calcularDesconto(int quantidadeComprada) {
+        if (quantidadeComprada >= getQuantidadeMinimaDesconto()) {
+            return quantidadeComprada * getValorUnitario() * (getPercentualDesconto() / 100.0);
+        }
+        return 0.0; // Retorna zero caso não atinja a quantidade mínima para desconto
+    }
 
 
     public  void limpar(){

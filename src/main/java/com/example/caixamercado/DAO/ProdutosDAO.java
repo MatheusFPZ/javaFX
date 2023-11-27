@@ -63,7 +63,7 @@ public class ProdutosDAO {
                     double valorUnitario = resultSet.getDouble("valor_unitario");
                     int categoria = resultSet.getInt("categoria");
 
-                    return new Produto(idProduto, descricao, valorUnitario, categoria);
+                    return new Produto(idProduto, descricao, valorUnitario, categoria, 0,0);
                     //System.out.println("codigo:"+idProduto+",descricao: "+ descricao+", valor: "+ valor_unitario);
                 }else {
                     System.out.println("nao encontrado");
