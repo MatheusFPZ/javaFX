@@ -1,5 +1,6 @@
 package com.example.caixamercado;
 
+import com.example.caixamercado.DAO.ClientesDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -264,7 +265,7 @@ public class HelloController implements Initializable {
         panel_desconhecido.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         cod_barras_text.setStyle("-fx-background-color: white;");
         titulo_table.setStyle("-fx-background-color: orange;");
-        Image image = new Image("file:/home/linux/Downloads/3549578.jpg");
+        Image image = new Image("file:1.jpg");
         img_view.setImage(image);
         panel_varios.setVisible(true);
 
@@ -310,6 +311,7 @@ public class HelloController implements Initializable {
 
         lbl_nova_venda.setDisable(false);
 
+
         if(!input_nome.getText().isEmpty()&&Integer.parseInt(input_dinheiro.getText())>=subtotal){
             System.out.println("////////NOTA FISCAL/////////");
             String nome = input_nome.getText();
@@ -331,6 +333,12 @@ public class HelloController implements Initializable {
             System.out.println("troco: " + String.format("%.2f", feito));
 
             System.out.println("///////////NOTA FISCAL//////////////");
+
+                ClientesDAO cliente = new ClientesDAO();
+                cliente.addCliente(input_nome.getText(), input_cpf.getText());
+
+
+
             input_nome.clear();
             input_cpf.clear();
 
@@ -380,7 +388,7 @@ public class HelloController implements Initializable {
         int i = Integer.parseInt(idProdutoParaBuscar1);
 
 
-        ProdutosDAO produtosDAO = new ProdutosDAO();
+            ProdutosDAO produtosDAO = new ProdutosDAO();
 
         Produto produtoEncontrado = produtosDAO.BuscarProduto(i);
 
@@ -423,10 +431,11 @@ public class HelloController implements Initializable {
             produtoEncontrado.setSubtotal(subtotal);
 
             Venda venda = new Venda();
-            double teste = venda.calcularDesconto(produtoEncontrado.getCodigo(), quantidade);
-            System.out.println(produtoEncontrado.getCodigo());
+            venda.quantidade(produtoEncontrado.getCodigo());
+            //System.out.println(venda.quantidade());
+            //double teste = venda.calcularDesconto(produtoEncontrado.getCodigo(), quantidade);
 
-            System.out.println("o valor de desconto por quantidade seria"+teste);
+            //System.out.println("o valor de desconto por quantidade seria"+teste);
 
 
 

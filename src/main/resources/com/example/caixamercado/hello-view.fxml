@@ -13,7 +13,7 @@
    <children>
       <Pane fx:id="panel_pagamento" prefHeight="545.0" prefWidth="682.0" visible="false">
          <children>
-            <VBox layoutX="54.0" layoutY="119.0" prefHeight="96.0" prefWidth="238.0">
+            <VBox layoutX="379.0" layoutY="104.0" prefHeight="96.0" prefWidth="238.0">
                <children>
                   <Pane fx:id="panel_nome" prefHeight="200.0" prefWidth="200.0">
                      <children>
@@ -27,7 +27,7 @@
                   </Pane>
                </children>
             </VBox>
-            <VBox layoutX="379.0" layoutY="119.0" prefHeight="96.0" prefWidth="238.0">
+            <VBox layoutX="54.0" layoutY="104.0" prefHeight="96.0" prefWidth="238.0">
                <children>
                   <Pane fx:id="panel_cpf" prefHeight="200.0" prefWidth="200.0">
                      <children>

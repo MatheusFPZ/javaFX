@@ -4,38 +4,58 @@ import java .util.HashMap;
 public class Venda {
 
     private HashMap<Integer, DescontoProduto> produtos;
-
+    private int quant = 0;
 
     public Venda() {
-        // Inicialize o HashMap com os produtos (chave: código do produto, valor: objeto DescontoProduto)
+
         this.produtos = new HashMap<>();
-        // Adicione seus produtos ao HashMap produtos
+
         DescontoProduto bis = new DescontoProduto(0.1, 3, 0);// Definindo a quantidade inicial
-        produtos.put(4, bis); // Exemplo de produto "Bis" com desconto de 10% se comprar 3 ou mais
-        // Adicione mais produtos conforme necessário...
+        produtos.put(4, bis);
+
+        DescontoProduto desc = produtos.get(4);
+
+        //desc.setQuantidadeExistente(9);
+
+
+
     }
+    public void quantidade(int codigoProduto){
 
-    public double calcularDesconto(int codigoProduto, int quantidade) {
-        int novaqtd= 0;
-        if (produtos.containsKey(codigoProduto)) {
+        if(produtos.containsKey(codigoProduto)){
+            DescontoProduto desc = produtos.get(codigoProduto);
+            //quant =  desc.getQuantidadeExistente()+quant;
+            quant += desc.getQuantidadeExistente();
+            desc.setQuantidadeExistente(desc.getQuantidadeExistente()+1);
 
-            DescontoProduto infoProduto = produtos.get(codigoProduto);
-            int quantidadeExistente = infoProduto.getQuantidadeExistente();
-            novaqtd = novaqtd + quantidadeExistente;
-            System.out.println("Quantidade existente antes: " + novaqtd);
 
-            // Atualiza a quantidade existente no objeto DescontoProduto
-            infoProduto.setQuantidadeExistente(quantidadeExistente + quantidade);
-            quantidadeExistente = infoProduto.getQuantidadeExistente(); // Atualiza a variável após a mudança
-            System.out.println("Quantidade existente depois: " + quantidadeExistente);
 
-            if (quantidadeExistente >= infoProduto.getQuantidadeMinima()) {
-                double desconto = infoProduto.getValorDesconto();
-                return quantidade * desconto;
-            }
+
+            System.out.println("Quantidade existente para o produto " + codigoProduto + ": " + desc.getQuantidadeExistente());
         }
-        return 0.0; // Se o produto não estiver no HashMap ou não atingir a quantidade mínima, retorna desconto 0
+
     }
+
+//    public double calcularDesconto(int codigoProduto, int quantidade) {
+//
+//        if (produtos.containsKey(codigoProduto)) {
+//
+//            DescontoProduto infoProduto = produtos.get(codigoProduto);
+//            quantidadeExistente = quantidadeExistente+(quantidade+1);
+//
+//
+//            System.out.println("quantidade" + quantidade);
+//            System.out.println("quantidade existente"+ quantidadeExistente);
+//
+//          if (quantidadeExistente >= infoProduto.getQuantidadeMinima()|| quantidade>= infoProduto.getQuantidadeMinima()) {
+//                double desconto = infoProduto.getValorDesconto();
+//              System.out.println("pegou desconto?"+desconto);
+//                quantidadeExistente=0;
+//                return quantidade * desconto;
+//            }
+//        }
+//        return 0.0;
+//    }
 }
 
 
