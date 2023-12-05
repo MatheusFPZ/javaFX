@@ -76,4 +76,34 @@ public class ClientesDAO {
         }
         }
 
+        public String buscaCliente(String cpf){
+
+            Connection conexao = database.conectar();
+            PreparedStatement preparedStatement = null;
+            ResultSet resultSet = null;
+            String nome = "";
+
+            if(conexao != null){
+                try {
+                    String sql = "SELECT * FROM clientes WHERE CPF = ?";
+                    preparedStatement = conexao.prepareStatement(sql);
+                    preparedStatement.setString(1, cpf);
+                    resultSet = preparedStatement.executeQuery();
+
+                    while (resultSet.next()) {
+
+                        nome = resultSet.getString("nome");
+                        System.out.println("Nome do cliente: " + nome);
+                    }
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    database.fecharConexao(conexao, preparedStatement, resultSet);
+                }
+            } else {
+                System.out.println("Falha na conexão com o banco de dados.");
+            }
+            return nome;
+        }
 }

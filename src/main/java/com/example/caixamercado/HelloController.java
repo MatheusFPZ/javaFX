@@ -5,10 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -120,8 +117,7 @@ public class HelloController implements Initializable {
     @FXML
     private TextField input_nome;
 
-    @FXML
-    private Label lbl_codigoInterno;
+
 
     @FXML
     private Label lbl_excluir;
@@ -135,8 +131,7 @@ public class HelloController implements Initializable {
     @FXML
     private Label lbl_nova_venda;
 
-    @FXML
-    private Label lbl_quantidadeL;
+
 
     @FXML
     private Label lbl_desconto;
@@ -153,6 +148,12 @@ public class HelloController implements Initializable {
 
     @FXML
     private Pane panel_descontos;
+
+    @FXML
+    private Button buscarCliente;
+
+
+
 
 
 
@@ -181,6 +182,7 @@ public class HelloController implements Initializable {
             finalizarCompra();
 
     }
+
     @FXML
     void removerLinhaSelecionada() {
         ObservableList<Produto> produtosSelecionados, todosProdutos;
@@ -270,18 +272,39 @@ public class HelloController implements Initializable {
         Image image = new Image("file:1.jpg");
         img_view.setImage(image);
         panel_varios.setVisible(true);
+        lbl_cupom.setDisable(true);
+        lbl_quantidade.setDisable(true);
 
 
         lbl_excluir.setDisable(true);
-        lbl_quantidadeL.setDisable(true);
+
         lbl_finalizar.setDisable(true);
-        lbl_codigoInterno.setDisable(true);
+
         lbl_gerar_nota.setDisable(true);
 
-
+        buscarCliente.setOnAction(event -> {
+            System.out.println("Botão buscarCliente foi pressionado!");
+            buscar(); // Chame sua função finalizarCompra() ou a lógica desejada aqui
+        });
 
 
     }
+
+public void buscar(){
+    ClientesDAO cliente = new ClientesDAO();
+
+    if(!buscarCliente.isPressed()){
+            System.out.println("ENTROUUUUUUUUU");
+            String cpf = input_cpf.getText();
+            String nome = cliente.buscaCliente(cpf); // Supondo que buscaClienteNome retorne o nome do cliente
+            if (nome != null && !nome.isEmpty()) {
+                input_nome.setText(nome);
+                System.out.println(nome);
+            }else{
+                cliente.addCliente(input_nome.getText(), input_cpf.getText());
+            }
+        }
+}
 
     private void finalizarCompra(){
 
@@ -289,9 +312,9 @@ public class HelloController implements Initializable {
         panel_pagamento.setVisible(true);
         lbl_nova_venda.setDisable(true);
         lbl_excluir.setDisable(true);
-        lbl_quantidadeL.setDisable(true);
+
         lbl_finalizar.setDisable(true);
-        lbl_codigoInterno.setDisable(true);
+
         lbl_gerar_nota.setDisable(false);
         panel_desconhecido.setVisible(false);
 
@@ -306,12 +329,22 @@ public class HelloController implements Initializable {
         }
 
 
+
+        if(buscarCliente.isPressed()){
+            System.out.println("show de bola");
+        }
+//
+
+
     }
 
     public void imprime_nota() {
 
 
         lbl_nova_venda.setDisable(false);
+
+
+
 
 
         if(!input_nome.getText().isEmpty()&&Integer.parseInt(input_dinheiro.getText())>=subtotal){
@@ -336,8 +369,9 @@ public class HelloController implements Initializable {
 
             System.out.println("///////////NOTA FISCAL//////////////");
 
-                ClientesDAO cliente = new ClientesDAO();
-                cliente.addCliente(input_nome.getText(), input_cpf.getText());
+
+
+
 
 
 
@@ -355,6 +389,9 @@ public class HelloController implements Initializable {
     }
 
     public void preencherTabela(int imprimiu) {
+
+        lbl_cupom.setDisable(false);
+        lbl_quantidade.setDisable(false);
         lbl_cod_cupom.setText("");
         panel_desconhecido.setVisible(true);
         if(imprimiu==1){
@@ -373,9 +410,9 @@ public class HelloController implements Initializable {
         lbl_nova_venda.setDisable(true);
         lbl_gerar_nota.setDisable(true);
         lbl_excluir.setDisable(false);
-        lbl_quantidadeL.setDisable(false);
+
         lbl_finalizar.setDisable(false);
-        lbl_codigoInterno.setDisable(false);
+
 
 
         panel_cod_barras.setDisable(false);
