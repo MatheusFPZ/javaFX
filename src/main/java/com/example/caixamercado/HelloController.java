@@ -389,7 +389,7 @@ public void buscar(){
     }
 
     public void preencherTabela(int imprimiu) {
-
+        lbl_cupom.clear();
         lbl_cupom.setDisable(false);
         lbl_quantidade.setDisable(false);
         lbl_cod_cupom.setText("");
