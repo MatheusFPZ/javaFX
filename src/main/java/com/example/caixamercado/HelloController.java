@@ -233,7 +233,7 @@ public class HelloController implements Initializable {
         double novoSubtotal = 0;
 
         for (Produto produto : produtos) {
-            novoSubtotal += produto.getQuantidade() * produto.getValorUnitario();
+            novoSubtotal += (produto.getQuantidade() * produto.getValorUnitario())-produto.getPercentualDesconto();
         }
 
         return novoSubtotal;
@@ -246,6 +246,8 @@ public class HelloController implements Initializable {
     double subtotal = 0;
 
     int quantidade =1;
+
+    Venda venda = new Venda();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cod_barras_text.setOnAction(event -> preencherTabela(0));
@@ -419,23 +421,19 @@ public class HelloController implements Initializable {
 
             subtotal = total+subtotal;
 
-            System.out.println(produtoEncontrado.getDescricao());
+            double desconto2 = (venda.quantidade(produtoEncontrado.getCodigo(), quantidade));
 
+            if(desconto2>0){
+                lbl_desconto.setText(String.valueOf(desconto2));
+            }
 
-
-
-
-            produtoEncontrado.setQuantidade(quantidade);
-            produtoEncontrado.setTotal(total);
+             produtoEncontrado.setQuantidade(quantidade);
+            produtoEncontrado.setTotal(total-desconto2);
             produtoEncontrado.setContador(contador++);
-            produtoEncontrado.setSubtotal(subtotal);
+            produtoEncontrado.setSubtotal(subtotal-desconto2);
 
-            Venda venda = new Venda();
-            venda.quantidade(produtoEncontrado.getCodigo());
-            //System.out.println(venda.quantidade());
-            //double teste = venda.calcularDesconto(produtoEncontrado.getCodigo(), quantidade);
 
-            //System.out.println("o valor de desconto por quantidade seria"+teste);
+
 
 
 
@@ -473,6 +471,7 @@ public class HelloController implements Initializable {
 
 
             desconto = (valor * 0.1)*quantidade;
+            produto.setPercentualDesconto(desconto);
 
 
         }
@@ -481,6 +480,7 @@ public class HelloController implements Initializable {
 
 
             desconto = (valor * 0.1)*quantidade;
+            produto.setPercentualDesconto(desconto);
 
         }
         return desconto;

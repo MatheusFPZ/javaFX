@@ -13,6 +13,15 @@ class DescontoProduto {
         this.quantidadeExistente = quantidadeExistente;
     }
 
+
+    public void incrementarQuantidade() {
+        quantidadeExistente++;
+    }
+
+
+    public void zerarQuantidade() {
+        quantidadeExistente = 0;
+    }
     public double getValorDesconto() {
         return valorDesconto;
     }
