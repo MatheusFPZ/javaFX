@@ -1,6 +1,6 @@
-package com.example.caixamercado.DAO;
+package com.caixamercado.DAO;
 
-import com.example.caixamercado.model.Produto;
+import com.caixamercado.model.Produto;
 import config.database;
 
 import java.sql.Connection;

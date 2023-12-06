@@ -1,6 +1,9 @@
-package com.example.caixamercado;
+package com.caixamercado;
 
-import com.example.caixamercado.DAO.ClientesDAO;
+import com.caixamercado.DAO.ClientesDAO;
+import com.caixamercado.DAO.ProdutosDAO;
+import com.caixamercado.model.Produto;
+import com.caixamercado.model.Venda;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,14 +16,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import com.example.caixamercado.model.Produto;
-import com.example.caixamercado.DAO.ProdutosDAO;
-import com.example.caixamercado.model.Venda;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelloController implements Initializable {
+public class Controller implements Initializable {
 
     @FXML
     private TextField cod_barras_text;
@@ -269,7 +269,11 @@ public class HelloController implements Initializable {
         panel_desconhecido.setStyle("-fx-background-radius: 5; -fx-background-color: orange;");
         cod_barras_text.setStyle("-fx-background-color: white;");
         titulo_table.setStyle("-fx-background-color: orange;");
-        Image image = new Image("file:1.jpg");
+
+        URL imageURL = getClass().getResource("/1.jpg");
+        String imagePath = imageURL!= null? imageURL.toExternalForm(): null;
+        Image image = new Image(imagePath);
+
         img_view.setImage(image);
         panel_varios.setVisible(true);
         lbl_cupom.setDisable(true);

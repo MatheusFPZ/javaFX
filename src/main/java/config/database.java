@@ -1,15 +1,15 @@
 package config;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.*;
 
 public class database {
     public static Connection conectar() {
         try {
-            // Carregar o driver JDBC para o SQLite
             Class.forName("org.sqlite.JDBC");
 
-            // Estabelecer a conexão com o banco de dados
 
-            return DriverManager.getConnection("jdbc:sqlite:base.db");
+            return DriverManager.getConnection("jdbc:sqlite::resource:base.db");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             return null; // Retornar null em caso de falha na conexão

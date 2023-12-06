@@ -1,4 +1,4 @@
-package com.example.caixamercado.model;
+package com.caixamercado.model;
 
 public class Cliente {
 
