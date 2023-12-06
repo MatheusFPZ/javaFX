@@ -56,6 +56,7 @@ public class ClientesDAO {
 
 
         if(conexao != null){
+
             try {
                 String sql = "INSERT INTO clientes (nome, cpf) VALUES (?, ?)";
                 preparedStatement = conexao.prepareStatement(sql);
@@ -63,8 +64,7 @@ public class ClientesDAO {
                 preparedStatement.setString(1, nome);
                 preparedStatement.setString(2, cpf);
 
-                preparedStatement.executeUpdate();
-
+               preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {

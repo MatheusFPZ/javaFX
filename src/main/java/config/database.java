@@ -1,6 +1,5 @@
 package config;
-import java.io.InputStream;
-import java.net.URL;
+
 import java.sql.*;
 
 public class database {
@@ -12,7 +11,7 @@ public class database {
             return DriverManager.getConnection("jdbc:sqlite::resource:base.db");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            return null; // Retornar null em caso de falha na conexão
+            return null;
         }
     }
 

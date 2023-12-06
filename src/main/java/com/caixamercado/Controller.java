@@ -288,7 +288,7 @@ public class Controller implements Initializable {
 
         buscarCliente.setOnAction(event -> {
             System.out.println("Botão buscarCliente foi pressionado!");
-            buscar(); // Chame sua função finalizarCompra() ou a lógica desejada aqui
+            buscar();
         });
 
 
@@ -298,16 +298,16 @@ public void buscar(){
     ClientesDAO cliente = new ClientesDAO();
 
     if(!buscarCliente.isPressed()){
-            System.out.println("ENTROUUUUUUUUU");
+
             String cpf = input_cpf.getText();
             String nome = cliente.buscaCliente(cpf); // Supondo que buscaClienteNome retorne o nome do cliente
             if (nome != null && !nome.isEmpty()) {
                 input_nome.setText(nome);
-                System.out.println(nome);
-            }else{
-                cliente.addCliente(input_nome.getText(), input_cpf.getText());
+
             }
         }
+    cliente.addCliente(input_nome.getText(), input_cpf.getText());
+
 }
 
     private void finalizarCompra(){
@@ -334,17 +334,11 @@ public void buscar(){
 
 
 
-        if(buscarCliente.isPressed()){
-            System.out.println("show de bola");
-        }
-//
-
-
     }
 
     public void imprime_nota() {
 
-
+        System.out.println("o nome é: "+ input_cpf.getText());
         lbl_nova_venda.setDisable(false);
 
 
