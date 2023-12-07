@@ -294,19 +294,21 @@ public class Controller implements Initializable {
 
     }
 
-public void buscar(){
+public int buscar(){
     ClientesDAO cliente = new ClientesDAO();
-
+    int encontrado =0;
     if(!buscarCliente.isPressed()){
 
             String cpf = input_cpf.getText();
-            String nome = cliente.buscaCliente(cpf); // Supondo que buscaClienteNome retorne o nome do cliente
+            String nome = cliente.buscaCliente(cpf);
             if (nome != null && !nome.isEmpty()) {
                 input_nome.setText(nome);
-
+            encontrado=1;
+                return encontrado;
             }
+
         }
-    cliente.addCliente(input_nome.getText(), input_cpf.getText());
+return 0;
 
 }
 
@@ -367,7 +369,11 @@ public void buscar(){
 
             System.out.println("///////////NOTA FISCAL//////////////");
 
+    if(buscar()== 0){
+    ClientesDAO cliente = new ClientesDAO();
+    cliente.addCliente(input_nome.getText(), input_cpf.getText());
 
+}
 
 
 
@@ -381,6 +387,7 @@ public void buscar(){
             table.getItems().clear();
             list.clear();
             lbl_cod_cupom.setText("");
+
             preencherTabela(1);
         }
 
