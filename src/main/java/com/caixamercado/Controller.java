@@ -370,6 +370,7 @@ return 0;
             System.out.println("///////////NOTA FISCAL//////////////");
 
     if(buscar()== 0){
+        System.out.println("CLIENTE NAO ENCONTRADO VAI ADICIONAR//////////////////////////"+ input_cpf.getText());
     ClientesDAO cliente = new ClientesDAO();
     cliente.addCliente(input_nome.getText(), input_cpf.getText());
 
